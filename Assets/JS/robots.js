@@ -88,8 +88,25 @@ const startGame = function() {
           break;
         }
     }
-    //restart
-    startGame();
+   endGame();
+};
+
+const endGame = function() {
+    if (playerHealth > 0) {
+        window.alert('You are the champion! Your score is ' + playerMoney + ".");
+    }
+    else {
+        window.alert("Your robot has been destroyed. Come back soon.");
+    }
+
+    const playAgainConfirm = window.confirm("Would you like to play again?")
+
+    if (playAgainConfirm) {
+        startGame();
+    }
+    else {
+        window.alert("Thanks for playing!")
+    }
 };
 
 startGame();
