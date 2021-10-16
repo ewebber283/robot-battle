@@ -5,7 +5,6 @@ let randomNumber = function(min, max) {
 let getPlayerName = function() {
     let name = "";
     while (name === "" || name === null) {
-    
         name = prompt("What is your robot's name?")
         }
     console.log("Your robot's name is " + name);
@@ -56,28 +55,46 @@ let enemyInfo = [
         attack: randomNumber(10,14)
     }
 ];
+
+let fightOrSkip = function() {
+    // ask player if they'd like to fight or skip using fightOrSkip function
+    let promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+  
+    //recursive function
+    if(promptFight === "" || promptFight === null){
+        window.alert("You need to provide a valid answer please try again")
+        return fightOrSkip();
+    }
+    promptFight = promptFight.toLowerCase();
+    // if player picks "skip" confirm and then stop the loop
+    if (promptFight === "skip") {
+      // confirm player wants to skip
+      const confirmSkip = window.confirm("Are you sure you'd like to quit?");
+  
+      // if yes (true), leave fight
+      if (confirmSkip) {
+        window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+        // subtract money from playerMoney for skipping
+        playerInfo.money = Math.max(0,playerInfo.money - 10);
+        //true if player wants to leave
+        return true;
+        //shop();
+      }
+    }
+    return false;
+  }
 // fight function
-const fight = function(enemy) {
+let fight = function(enemy) {
     while (playerInfo.health > 0 && enemy.health > 0) {
     
-      const promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-  
-      if (promptFight === "skip" || promptFight === "SKIP") {
-        
-        const confirmSkip = window.confirm("Are you sure you'd like to quit?");
-  
-        if (confirmSkip) {
-          window.alert(playerInfo.health + ' has decided to skip this fight. Goodbye!');
-          playerInfo.money = Math.max(0,playerInfo.money - 10);
-          console.log("playerInfo.money", playerInfo.money);
-          break;
-        }
+      if(fightOrSkip()) {
+        break;
       }
       
       let damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
       enemy.health = Math.max(0, enemy.health - damage);
       console.log(
-        playerInfo.health + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health remaining.'
+        playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health remaining.'
       );
   
       if (enemy.health <= 0) {
@@ -95,15 +112,15 @@ const fight = function(enemy) {
       playerInfo.health = Math.max(0,playerInfo.health - damage);
 
       console.log(
-        enemy.name + ' attacked ' + playerInfo.health + '. ' + playerInfo.health + ' now has ' + playerInfo.health + ' health remaining.'
+        enemy.name + ' attacked ' + playerInfo.name + '. ' + playerInfo.name + ' now has ' + playerInfo.health + ' health remaining.'
       );
   
       if (playerInfo.health <= 0) {
-        window.alert(playerInfo.health + ' has died!');
+        window.alert(playerInfo.name + ' has died!');
         // leave while loop if player is dead
         break;
       } else {
-        window.alert(playerInfo.health + ' still has ' + playerInfo.health + ' health left.');
+        window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
       }
     }
   };
