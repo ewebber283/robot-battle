@@ -169,20 +169,28 @@ const startGame = function() {
 };
 
 const endGame = function() {
-    if (playerInfo.health > 0) {
-        window.alert('You are the champion! Your score is ' + playerInfo.money + ".");
+    window.alert("The game has ended. Let's see how you did!");
+
+    //check localstorage for high score
+    let highScore = localStorage.getItem("highscore");
+    if(highScore === null) {
+        highScore = 0;
     }
-    else {
-        window.alert("Your robot has been destroyed. Come back soon.");
+    if(playerInfo.money > highScore) {
+        localStorage.setItem("highscore", playerInfo.money)
+        localStorage.setItem("name", playerInfo.name);
+
+        alert(playerInfo.name + " now has the high score of " + playerInfo.money)
+    } else {
+        alert(playerInfo.name + " did not beat the high score of " + highScore);
     }
 
     const playAgainConfirm = window.confirm("Would you like to play again?")
 
-    if (playAgainConfirm) {
+    if(playAgainConfirm) {
         startGame();
-    }
-    else {
-        window.alert("Thanks for playing!")
+    } else {
+        window.alert("Thanks for playing! Come back soon.")
     }
 };
 
