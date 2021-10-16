@@ -85,10 +85,14 @@ let fightOrSkip = function() {
   }
 // fight function
 let fight = function(enemy) {
+    let isPlayerTurn = true;
+    if(Math.random() > 0.5){
+        isPlayerTurn = false;
+    }
     while (playerInfo.health > 0 && enemy.health > 0) {
-    
-      if(fightOrSkip()) {
-        break;
+      if(isPlayerTurn) {
+        if(fightOrSkip()) {
+            break;
       }
       
       let damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
@@ -107,7 +111,7 @@ let fight = function(enemy) {
       } else {
         window.alert(enemy.name + ' still has ' + enemy.health + ' health left.');
       }
-
+    } else {
       damage = randomNumber(enemy.attack - 3, enemy.attack);
       playerInfo.health = Math.max(0,playerInfo.health - damage);
 
@@ -122,6 +126,9 @@ let fight = function(enemy) {
       } else {
         window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
       }
+    }
+    // switch turns
+    isPlayerTurn = !isPlayerTurn
     }
   };
 // start game  
