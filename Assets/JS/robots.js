@@ -13,14 +13,14 @@ console.log(enemyNames[0]);
 console.log(enemyNames[3]);
 
 // fight function
-var fight = function(enemyName) {
+const fight = function(enemyName) {
     while (playerHealth > 0 && enemyHealth > 0) {
     
-      var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+      const promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
   
       if (promptFight === "skip" || promptFight === "SKIP") {
         
-        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+        const confirmSkip = window.confirm("Are you sure you'd like to quit?");
   
         if (confirmSkip) {
           window.alert(playerName + ' has decided to skip this fight. Goodbye!');
@@ -60,26 +60,37 @@ var fight = function(enemyName) {
       }
     }
   };
-  
-  // fight each enemy-robot by looping over them and fighting them one at a time
-  for (var i = 0; i < enemyNames.length; i++) {
+// start game  
+const startGame = function() {
 
-    if (playerHealth > 0) {
+    //reset stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
+
+    for (let i = 0; i < enemyNames.length; i++) {
+
+        if (playerHealth > 0) {
+          
+          window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
       
-      window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
-  
-      // pick new enemy to fight based on the index of the enemyNames array
-      var pickedEnemyName = enemyNames[i];
-  
-      // reset enemyHealth before starting new fight
-      enemyHealth = 50;
-  
-      fight(pickedEnemyName);
+          // pick new enemy to fight based on the index of the enemyNames array
+          const pickedEnemyName = enemyNames[i];
+      
+          // reset enemyHealth before starting new fight
+          enemyHealth = 50;
+      
+          fight(pickedEnemyName);
+        }
+        // if player isn't alive, stop the game
+        else {
+          window.alert('You have lost your robot in battle! Game Over!');
+          break;
+        }
     }
-    // if player isn't alive, stop the game
-    else {
-      window.alert('You have lost your robot in battle! Game Over!');
-      break;
-    }
-  }
+    //restart
+    startGame();
+};
+
+startGame();
 
